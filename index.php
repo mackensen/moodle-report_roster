@@ -45,11 +45,12 @@ $coursecontext = context_course::instance($course->id);
 require_capability('report/roster:view', $coursecontext);
 
 // Get all the users.
-$userlist = get_enrolled_users($coursecontext, '', 0, user_picture::fields('u'));
+$userlist = get_enrolled_users($coursecontext, '', 0, user_picture::fields('u', array('username')));
 $data = array();
 foreach ($userlist as $user) {
     $item = $OUTPUT->user_picture($user, array('size' => 100, 'courseid' => $course->id));
     $item .= html_writer::tag('span', fullname($user));
+    $item .= html_writer::tag('span', $user->username);
     $data[] = $item;
 }
 
